@@ -9,9 +9,24 @@ import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import authRoutes from './routes/auth.route.js'
+//Routes
+import authRoutes from './routes/auth.routes.js'
+import userRouter from './routes/users.routes.js'
+import postRouter from './routes/posts.routes.js'
 
+//Controllers
 import { register } from "./controllers/auth.controller.js"
+import { createPost } from "./controllers/posts.controller.js"
+
+//Middlewares
+import { verifyToken } from './middleware/auth.middleware.js'
+
+//Models, Data
+import SocialUser from './models/SocialUser.model.js';
+import Post from './models/Post.model.js';
+import { user, posts } from './data/index.data.js'
+
+
 
 // CONFIGURATIONS
 const __filename = fileURLToPath(import.meta.url)
@@ -40,9 +55,12 @@ const upload = multer({ storage })
 
 // ROUTES WITH FILES
 app.post("/auth/register", upload.single("picture"), register)
+app.post("/posts", verifyToken, upload.single("picture"), createPost)
 
 //ROUTES
 app.use("/auth", authRoutes)
+app.use("/users", userRouter)
+app.use("/posts", postRouter)
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001
