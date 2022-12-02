@@ -24,7 +24,7 @@ import { verifyToken } from './middleware/auth.middleware.js'
 //Models, Data
 import SocialUser from './models/SocialUser.model.js';
 import Post from './models/Post.model.js';
-import { user, posts } from './data/index.data.js'
+import { users, posts } from './data/index.data.js'
 
 
 
@@ -67,6 +67,13 @@ const PORT = process.env.PORT || 6001
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => {
+})
+.then(() => {
   app.listen(PORT, () => console.log(`Server running in port: ${PORT} 🔥🔥🔥`))
-}).catch((error) => console.log(`${error} did not connect`))
+
+
+  //ADD DATA ONE TIME
+  SocialUser.insertMany(users)
+  Post.insertMany(posts)
+})
+.catch((error) => console.log(`${error} did not connect`))
