@@ -1,11 +1,11 @@
 import Post from '../models/Post.model.js'
-import SocialUser from '../models/SocialUser.model.js'
+import User from '../models/User.model.js'
 
 //*CREATE
 export const createPost = async( req, res ) => {
   try {
     const { userId, description, picturePath } = req.body
-    const user = await SocialUser.findById(userId)
+    const user = await User.findById(userId)
 
     const newPost = new Post({
       userId,

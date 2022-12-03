@@ -22,7 +22,7 @@ import { createPost } from "./controllers/posts.controller.js"
 import { verifyToken } from './middleware/auth.middleware.js'
 
 //Models, Data
-import SocialUser from './models/SocialUser.model.js';
+import User from './models/User.model.js';
 import Post from './models/Post.model.js';
 import { users, posts } from './data/index.data.js'
 
@@ -73,7 +73,7 @@ mongoose.connect(process.env.MONGO_URL, {
 
 
   //ADD DATA ONE TIME
-  SocialUser.insertMany(users)
-  Post.insertMany(posts)
+  // User.insertMany(users)
+  // Post.insertMany(posts)
 })
 .catch((error) => console.log(`${error} did not connect`))
